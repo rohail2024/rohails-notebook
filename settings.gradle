@@ -1,0 +1,6 @@
+rootProject.name = "RohailsNoteBook"
+
+include(":app")
+include(":data")
+include(":domain")
+include(":scripts")
