@@ -34,8 +34,18 @@ jobs:
             platforms;android-34
             build-tools;34.0.0
 
-      - name: Accept SDK licenses
-        run: yes | sdkmanager --licenses
+      - name: Accept SDK licenses and ensure packages
+        env:
+          ANDROID_HOME: /usr/local/lib/android/sdk
+          ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+        run: |
+          set -e
+          SDK_BIN="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          if [ ! -x "$SDK_BIN" ]; then
+            SDK_BIN="$ANDROID_HOME/cmdline-tools/16.0/bin/sdkmanager"
+          fi
+          yes | "$SDK_BIN" --licenses
+          "$SDK_BIN" --install "platforms;android-34" "build-tools;34.0.0" "platform-tools"
 
       - name: Download Gradle 8.2.1
         run: |
