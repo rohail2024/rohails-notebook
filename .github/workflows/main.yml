@@ -8,7 +8,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -26,26 +25,15 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Set up Android SDK
+      - name: Set up Android SDK (auto-accept licenses)
         uses: android-actions/setup-android@v3
         with:
+          accept-android-licenses: true
           packages: |
             platform-tools
             platforms;android-34
             build-tools;34.0.0
-
-      - name: Accept SDK licenses and ensure packages
-        env:
-          ANDROID_HOME: /usr/local/lib/android/sdk
-          ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
-        run: |
-          set -e
-          SDK_BIN="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
-          if [ ! -x "$SDK_BIN" ]; then
-            SDK_BIN="$ANDROID_HOME/cmdline-tools/16.0/bin/sdkmanager"
-          fi
-          yes | "$SDK_BIN" --licenses
-          "$SDK_BIN" --install "platforms;android-34" "build-tools;34.0.0" "platform-tools"
+            cmdline-tools;latest
 
       - name: Download Gradle 8.2.1
         run: |
