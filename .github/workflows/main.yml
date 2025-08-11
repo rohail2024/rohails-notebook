@@ -8,6 +8,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      ANDROID_SDK_ROOT: ${{ github.workspace }}/android-sdk
+      ANDROID_HOME: ${{ github.workspace }}/android-sdk
 
     steps:
       - name: Checkout
@@ -26,35 +29,17 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Set up Android SDK (action)
-        uses: android-actions/setup-android@v3
-        with:
-          cmdline-tools-version: latest
-          accept-android-sdk-licenses: true
-          log-accepted-android-sdk-licenses: true
-          packages: |
-            platform-tools
-            platforms;android-34
-            build-tools;34.0.0
-
-      # Hard force license acceptance (works around interactive prompt)
-      - name: Force-accept licenses
-        env:
-          ANDROID_HOME: /usr/local/lib/android/sdk
-          ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+      - name: Install Android SDK + accept licenses
         run: |
-          set -e
-          BIN1="$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager"
-          BIN2="$ANDROID_SDK_ROOT/cmdline-tools/16.0/bin/sdkmanager"
-          BIN3="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
-          BIN4="$ANDROID_HOME/cmdline-tools/16.0/bin/sdkmanager"
-          for BIN in "$BIN1" "$BIN2" "$BIN3" "$BIN4"; do
-            if [ -x "$BIN" ]; then
-              yes | "$BIN" --sdk_root="$ANDROID_SDK_ROOT" --licenses || true
-              "$BIN" --sdk_root="$ANDROID_SDK_ROOT" --install "platforms;android-34" "build-tools;34.0.0" "platform-tools" || true
-              break
-            fi
-          done
+          set -eux
+          mkdir -p "$ANDROID_SDK_ROOT/cmdline-tools"
+          curl -sSL https://dl.google.com/android/repository/commandlinetools-linux-12266719_latest.zip -o cmdtools.zip
+          unzip -q cmdtools.zip -d "$ANDROID_SDK_ROOT/cmdline-tools"
+          mv "$ANDROID_SDK_ROOT/cmdline-tools/cmdline-tools" "$ANDROID_SDK_ROOT/cmdline-tools/latest"
+          yes | "$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_SDK_ROOT" --licenses
+          "$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_SDK_ROOT" \
+            "platform-tools" "platforms;android-34" "build-tools;34.0.0"
+          echo "$ANDROID_SDK_ROOT/platform-tools" >> $GITHUB_PATH
 
       - name: Download Gradle 8.2.1
         run: |
@@ -62,7 +47,7 @@ jobs:
           unzip -q gradle-8.2.1-bin.zip
           echo "$GITHUB_WORKSPACE/gradle-8.2.1/bin" >> $GITHUB_PATH
 
-      - name: Build Debug APK (no wrapper)
+      - name: Build Debug APK
         run: gradle assembleDebug
 
       - name: Upload APK
