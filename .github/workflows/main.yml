@@ -26,7 +26,7 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Set up Android SDK
+      - name: Set up Android SDK (action)
         uses: android-actions/setup-android@v3
         with:
           cmdline-tools-version: latest
@@ -37,21 +37,21 @@ jobs:
             platforms;android-34
             build-tools;34.0.0
 
-      - name: Ensure licenses accepted (fallback)
+      # Hard force license acceptance (works around interactive prompt)
+      - name: Force-accept licenses
         env:
           ANDROID_HOME: /usr/local/lib/android/sdk
           ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
         run: |
           set -e
-          for BIN in \
-            "$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager" \
-            "$ANDROID_SDK_ROOT/cmdline-tools/16.0/bin/sdkmanager" \
-            "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" \
-            "$ANDROID_HOME/cmdline-tools/16.0/bin/sdkmanager"
-          do
+          BIN1="$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager"
+          BIN2="$ANDROID_SDK_ROOT/cmdline-tools/16.0/bin/sdkmanager"
+          BIN3="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          BIN4="$ANDROID_HOME/cmdline-tools/16.0/bin/sdkmanager"
+          for BIN in "$BIN1" "$BIN2" "$BIN3" "$BIN4"; do
             if [ -x "$BIN" ]; then
-              yes | "$BIN" --licenses
-              "$BIN" --install "platforms;android-34" "build-tools;34.0.0" "platform-tools"
+              yes | "$BIN" --sdk_root="$ANDROID_SDK_ROOT" --licenses || true
+              "$BIN" --sdk_root="$ANDROID_SDK_ROOT" --install "platforms;android-34" "build-tools;34.0.0" "platform-tools" || true
               break
             fi
           done
