@@ -92,7 +92,6 @@ private fun rectOf(a: Offset, b: Offset): Rect {
  * AttachmentStorage (original preserved).
  */
 @OptIn(ExperimentalMaterial3Api::class)
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AnnotateScreen(
     noteId: Long,
