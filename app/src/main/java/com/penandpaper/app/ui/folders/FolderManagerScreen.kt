@@ -12,6 +12,7 @@ import com.penandpaper.domain.model.Folder
 import com.penandpaper.app.ui.list.FoldersViewModel
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FolderManagerScreen(vm: FoldersViewModel = hiltViewModel()) {
     val folders by vm.folders.collectAsState()

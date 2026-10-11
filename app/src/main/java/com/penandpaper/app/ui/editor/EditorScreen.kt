@@ -51,6 +51,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.viewModelScope
 import com.penandpaper.app.storage.AttachmentStorage
 import com.penandpaper.app.ui.AutoSaver
 import com.penandpaper.app.ui.theme.FolderTheme
@@ -106,9 +107,10 @@ fun EditorScreen(
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 Box {
                     ExtendedFloatingActionButton(
-                        text = { Text("Add") },
                         onClick = { addMenu = true }
-                    )
+                    ) {
+                        Text("Add")
+                    }
                     DropdownMenu(expanded = addMenu, onDismissRequest = { addMenu = false }) {
                         DropdownMenuItem(
                             text = { Text("Scan document") },
@@ -120,7 +122,9 @@ fun EditorScreen(
                         )
                     }
                 }
-                ExtendedFloatingActionButton(text = { Text("Text") }, onClick = vm::addTextBlock)
+                ExtendedFloatingActionButton(onClick = vm::addTextBlock) {
+                    Text("Text")
+                }
             }
         }
     ) { pad ->

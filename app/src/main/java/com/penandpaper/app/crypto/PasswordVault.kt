@@ -2,7 +2,7 @@
 package com.penandpaper.app.crypto
 import android.content.Context
 import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.preferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -11,9 +11,9 @@ import java.util.Base64
 private val Context.vault by preferencesDataStore("vault")
 
 object PasswordVault {
-    private val SALT = preferencesKey<String>("salt")
-    private val WRAPPED_DATA_KEY = preferencesKey<String>("wrapped_data_key")
-    private val TEST_CIPHER = preferencesKey<String>("test_cipher")
+    private val SALT = stringPreferencesKey("salt")
+    private val WRAPPED_DATA_KEY = stringPreferencesKey("wrapped_data_key")
+    private val TEST_CIPHER = stringPreferencesKey("test_cipher")
 
     fun isInitialized(ctx: Context): Boolean = runBlocking {
         val prefs = ctx.vault.data.first()

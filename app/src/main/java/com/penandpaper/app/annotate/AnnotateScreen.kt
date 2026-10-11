@@ -201,7 +201,7 @@ fun AnnotateScreen(
         for (s in all) {
             val paint = android.graphics.Paint().apply {
                 isAntiAlias = true
-                color = s.color.toArgb()
+                this.color = s.color.toArgb()
                 strokeWidth = s.widthPx * sx
                 style = android.graphics.Paint.Style.STROKE
                 strokeCap = android.graphics.Paint.Cap.ROUND
@@ -216,7 +216,7 @@ fun AnnotateScreen(
             if (s.tool == AnnotTool.TEXT && s.text.isNotEmpty()) {
                 val p0 = pts.firstOrNull() ?: continue
                 val tp = android.graphics.Paint().apply {
-                    color = s.color.toArgb()
+                    this.color = s.color.toArgb()
                     textSize = s.widthPx * 5f * sx
                     isAntiAlias = true
                 }

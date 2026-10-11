@@ -3,6 +3,7 @@ package com.penandpaper.app.ui.theme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -15,8 +16,9 @@ object FolderTheme {
     var preferLight: Boolean by mutableStateOf(false)
     var useAccentForHighlights: Boolean by mutableStateOf(true)
 
+    @Composable
     fun appBarColors(): TopAppBarColors {
-        val container = color ?: TopAppBarDefaults.topAppBarColors().containerColor(true).value
+        val container = color ?: MaterialTheme.colorScheme.surface
         val content = when (contentMode) {
             "light" -> Color.White
             "dark" -> Color.Black

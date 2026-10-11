@@ -16,7 +16,7 @@ import kotlin.coroutines.resumeWithException
 object Ocr {
     suspend fun recognizeText(ctx: Context, bitmap: Bitmap): String =
         suspendCancellableCoroutine { cont ->
-            val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT)
+            val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
             recognizer.process(InputImage.fromBitmap(bitmap, 0))
                 .addOnSuccessListener { visionText ->
                     val sb = StringBuilder()

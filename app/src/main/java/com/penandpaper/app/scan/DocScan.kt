@@ -30,7 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.google.mlkit.vision.documentscanner.GmsDocumentScanner
+import com.google.mlkit.vision.documentscanner.GmsDocumentScanning
 import com.google.mlkit.vision.documentscanner.GmsDocumentScannerOptions
 import com.google.mlkit.vision.documentscanner.GmsDocumentScanningResult
 import com.penandpaper.app.ui.editor.EditorViewModel
@@ -83,10 +83,9 @@ fun rememberDocScanLauncher(onResult: (List<Uri>) -> Unit): () -> Unit {
         if (activity == null) {
             Log.w("DocScan", "No Activity context for scanner")
             latestOnResult(emptyList())
-            return@let
-        }
-        try {
-            val client = GmsDocumentScanner.getClient(docScannerOptions())
+        } else {
+            try {
+                val client = GmsDocumentScanning.getClient(docScannerOptions())
             client.getStartScanIntent(activity)
                 .addOnSuccessListener { intentSender ->
                     launcher.launch(IntentSenderRequest.Builder(intentSender).build())
@@ -98,6 +97,7 @@ fun rememberDocScanLauncher(onResult: (List<Uri>) -> Unit): () -> Unit {
         } catch (t: Throwable) {
             Log.w("DocScan", "Scanner unavailable", t)
             latestOnResult(emptyList())
+        }
         }
     }
 }
