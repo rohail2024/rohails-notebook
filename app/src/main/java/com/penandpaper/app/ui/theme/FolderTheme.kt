@@ -1,5 +1,6 @@
 package com.penandpaper.app.ui.theme
 
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
@@ -16,6 +17,7 @@ object FolderTheme {
     var preferLight: Boolean by mutableStateOf(false)
     var useAccentForHighlights: Boolean by mutableStateOf(true)
 
+    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun appBarColors(): TopAppBarColors {
         val container = color ?: MaterialTheme.colorScheme.surface
