@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Document sheet -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M40,32 h28 a6,6 0 0 1 6,6 v36 a6,6 0 0 1 -6,6 h-28 a6,6 0 0 1 -6,-6 v-36 a6,6 0 0 1 6,-6 z" />
+    <!-- Folded corner -->
+    <path
+        android:fillColor="#E2E8F0"
+        android:pathData="M66,32 h8 v8 z" />
+    <!-- Text lines -->
+    <path
+        android:fillColor="#CBD5E1"
+        android:pathData="M40,46 h28 v4 h-28 z" />
+    <path
+        android:fillColor="#CBD5E1"
+        android:pathData="M40,54 h28 v4 h-28 z" />
+    <path
+        android:fillColor="#CBD5E1"
+        android:pathData="M40,62 h16 v4 h-16 z" />
+    <!-- Scan brackets -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#F59E0B"
+        android:strokeWidth="5"
+        android:strokeLineCap="round"
+        android:pathData="M30,46 L30,36 Q30,32 34,32 L44,32" />
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#F59E0B"
+        android:strokeWidth="5"
+        android:strokeLineCap="round"
+        android:pathData="M62,32 L74,32 Q78,32 78,36 L78,46" />
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#F59E0B"
+        android:strokeWidth="5"
+        android:strokeLineCap="round"
+        android:pathData="M30,60 L30,72 Q30,76 34,76 L44,76" />
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#F59E0B"
+        android:strokeWidth="5"
+        android:strokeLineCap="round"
+        android:pathData="M62,76 L74,76 Q78,76 78,72 L78,60" />
+    <!-- Pen nib accent -->
+    <path
+        android:fillColor="#F97316"
+        android:pathData="M66,64 m-7,0 a7,7 0 1 0 14,0 a7,7 0 1 0 -14,0" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M66,68 m-2.4,0 a2.4,2.4 0 1 0 4.8,0 a2.4,2.4 0 1 0 -4.8,0" />
+</vector>

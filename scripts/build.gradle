@@ -1,0 +1,4 @@
+// Docs-only module (keystore instructions); kept so settings.gradle stays intact.
+plugins {
+    id 'base'
+}
